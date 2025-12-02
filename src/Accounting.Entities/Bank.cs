@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Accounting.Entities
+{
+    public class Bank
+    {
+
+        [Key]
+        [Column("bank_id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int BankId { get; set; }
+
+        [Required]
+        [Column("name")]
+        [MaxLength(150)]
+        public string Name { get; set; } = string.Empty;
+
+        [Column("bank_code", TypeName = "nchar(40)")]
+        [MaxLength(40)]
+        public string? BankCode { get; set; }
+
+        [Required]
+        [Column("created_at", TypeName = "datetime2(5)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
+
+        [Column("updated_at", TypeName = "datetime2(5)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedAt { get; set; }
+
+        [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; }
+
+    }
+}
