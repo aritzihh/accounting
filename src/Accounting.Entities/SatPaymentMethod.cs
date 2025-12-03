@@ -28,7 +28,7 @@ namespace Accounting.Entities
 
         [Column("bank_required")]
         [Required]
-        public bool BankRequired { get; set; } = false;
+        public bool BankRequired { get; set; }
 
         [Column("start_date")]
         public DateTime? StartDate { get; set; }
@@ -38,13 +38,14 @@ namespace Accounting.Entities
 
         [Column("is_active")]
         [Required]
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
 
         [Column("created_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
     }
 }

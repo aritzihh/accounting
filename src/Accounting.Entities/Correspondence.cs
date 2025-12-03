@@ -41,10 +41,9 @@ namespace Accounting.Entities
         public string? MigrationType { get; set; }
 
         [Column("reviewed_by_user_id")]
-        [ForeignKey(nameof(ReviewedByUser))]
         public int? ReviewedByUserId { get; set; }
 
-        [Column("reviewed_date", TypeName = "datetime2(3)")]
+        [Column("reviewed_date")]
         public DateTime? ReviewedDate { get; set; }
 
         [Column("notes")]
@@ -52,7 +51,7 @@ namespace Accounting.Entities
         public string? Notes { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
@@ -60,12 +59,10 @@ namespace Accounting.Entities
         [Column("is_active")]
         public bool IsActive { get; set; }
 
-        // Navigation properties
         public virtual FiscalYear? FiscalYearSource { get; set; }
         public virtual AccountingAccount? AccountingAccountSource { get; set; }
         public virtual FiscalYear? FiscalYearDestination { get; set; }
         public virtual AccountingAccount? AccountingAccountDestination { get; set; }
-        public virtual User? ReviewedByUser { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Accounting.Entities
 {
-    public class AccountingAcountSetup
+    public class AccountingAccountSetup
     {
         [Key]
         [Column("accounting_account_setup_id")]
@@ -43,11 +43,12 @@ namespace Accounting.Entities
         public int? NumbeCharactersLevel9 { get; set; }
 
         [Column("created_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Required]
         public DateTime created_at { get; set; }
 
         [Column("is_active")]
         [Required]
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
     }
 }

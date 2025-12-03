@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Accounting.Entities
 {
@@ -22,7 +23,8 @@ namespace Accounting.Entities
         public int SatCurrencyId { get; set; }
 
         [Required]
-        [Column("exchange_rate", TypeName = "decimal(18, 6)")]
+        [Column("exchange_rate")]
+        [Precision(18, 6)]
         public decimal ExchangeRate { get; set; }
 
         [Required]
@@ -34,15 +36,14 @@ namespace Accounting.Entities
         public bool IsActive { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at"]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at"]        
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
-        // Navigation property
+
         public virtual SatCurrency? SatCurrency { get; set; }
 
     }

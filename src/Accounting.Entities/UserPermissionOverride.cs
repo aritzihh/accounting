@@ -34,16 +34,17 @@ namespace Accounting.Entities
         public string? Reason { get; set; }
 
         [Column("created_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Required]
         public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
         [Required]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Column("is_active")]
         [Required]
-        public bool IsActive { get; set; } = true;  
+        public bool IsActive { get; set; } 
 
         public virtual User? User { get; set; }
         public virtual Permission? Permission { get; set; }

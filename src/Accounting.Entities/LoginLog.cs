@@ -13,25 +13,28 @@ namespace Accounting.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("login_log_id")]
-        public int loginLogId { get; set; }
-
+        public int LoginLogId { get; set; }
 
         [Column("date_login")]
-        public DateTime dateLogin {  get; set; }
+        public DateTime DateLogin { get; set; }
 
         [MaxLength(500)]
         [Column("comment")]
-        public string comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         [Column("created_at")]
-        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
 
         [Column("is_active")]
-        public bool isActive { get; set; }
+        [Required]
+        public bool IsActive { get; set; }
 
         [Column("user_id")]
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
-        [ForeignKey(nameof(userId))]
-        public virtual User { get; set;}
+        [ForeignKey(nameof(UserId))]
+        public virtual User? User { get; set; }
+
+    }
 }

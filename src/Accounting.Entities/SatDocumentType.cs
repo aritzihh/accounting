@@ -26,24 +26,23 @@ namespace Accounting.Entities
         [MaxLength(255)]
         public string Description { get; set; } = string.Empty;
 
-        [Column("start_date", TypeName = "date")]
+        [Column("start_date")]
         public DateTime? StartDate { get; set; }
 
-        [Column("end_date", TypeName = "date")]
+        [Column("end_date")]
         public DateTime? EndDate { get; set; }
 
         [Required]
         [Column("is_active")]
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
     }
 }

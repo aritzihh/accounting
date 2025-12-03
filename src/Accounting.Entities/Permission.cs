@@ -33,20 +33,17 @@ namespace Accounting.Entities
         public string? Description { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Required]
         [Column("is_active")]
         public bool IsActive { get; set; }
-
-        // Navigation property
-        [DeleteBehavior(DeleteBehavior.Cascade)]
+        
         public virtual Process? Process { get; set; }
 
     }

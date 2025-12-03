@@ -38,14 +38,15 @@ namespace Accounting.Entities
         public string? TaxId { get; set; }
 
         [Column("created_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
 
         [Column("is_active")]
         [Required]
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
 
-        // Navegación
+        
         public virtual SatCountryDiot? SatCountryDiot { get; set; }
         public virtual ICollection<DiotTransaction>? DiotTransactions { get; set; }
     }

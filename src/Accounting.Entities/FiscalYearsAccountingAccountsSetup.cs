@@ -31,21 +31,19 @@ namespace Accounting.Entities
         public bool IsTransfer { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
         [Required]
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Required]
         [Column("is_active")]
         public bool IsActive { get; set; }
 
-        // Navigation properties
-        public virtual AccountingAccountsSetup? AccountingAccountsSetup { get; set; }
+        public virtual AccountingAccountSetup? AccountingAccountsSetup { get; set; }
         public virtual FiscalYear? FiscalYear { get; set; }
 
     }

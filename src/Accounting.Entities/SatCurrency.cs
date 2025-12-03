@@ -8,32 +8,34 @@ namespace Accounting.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("sat_currency_id")]
-        public int satCurrencyId { get; set; }
+        public int SatCurrencyId { get; set; }
 
         [MaxLength(10)]
         [Column("code")]
-        public string code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         [MaxLength(255)]
         [Column("description")]
-        public string description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Column("decimal_places")]
-        public int decimalPlaces { get; set; }
+        public int DecimalPlaces { get; set; }
 
         [Column("start_date")]
-        public DateTime startDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Column("end_date")]
-        public DateTime endDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         [Column("is_active")]
-        public bool isActive { get; set; }
+        [Required]
+        public bool IsActive { get; set; }
 
         [Column("created_at")]
-        public DateTime createdAt { get; set; } = DateTime.Now;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime updatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
     }
 }

@@ -46,13 +46,12 @@ namespace Accounting.Entities
         [Column("is_active")]
         public bool? IsActive { get; set; } = true;
 
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
     }
 }

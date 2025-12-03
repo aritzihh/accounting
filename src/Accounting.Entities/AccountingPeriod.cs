@@ -29,7 +29,7 @@ namespace Accounting.Entities
         [Column("is_closed")]
         public bool IsClosed { get; set; }
 
-        [Column("closing_date", TypeName = "datetime2(3)")]
+        [Column("closing_date")]
         public DateTime? ClosingDate { get; set; }
 
         [Column("closed_by_user_id")]
@@ -40,13 +40,12 @@ namespace Accounting.Entities
         public string? Notes { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Required]
         [Column("is_active")]

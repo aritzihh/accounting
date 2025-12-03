@@ -26,14 +26,15 @@ namespace Accounting.Entities
         public string? Description { get; set; }
 
         [Column("created_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Column("is_active")]
         [Required]
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
     }
 }

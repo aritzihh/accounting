@@ -13,32 +13,36 @@ namespace Accounting.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("payment_way_id")]
-        public int paymentWayId { get; set; }
+        public int PaymentWayId { get; set; }
 
         [MaxLength(5)]
         [Column("code")]
-        public string code { get; set; }
+        [Required]
+        public string Code { get; set; } = string.Empty;
 
         [MaxLength(255)]
         [Column("description")]
-        public string description { get; set; }
+        [Required]
+        public string Description { get; set; } = string.Empty;
 
         [Column("start_date")]
-        public DateTime startTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         [Column("end_date")]
-        public DateTime endTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         [Column("is_active")]
-        public bool isActive { get; set; }
+        [Required]
+        public bool IsActive { get; set; }
 
         [Column("created_at")]
-        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime updatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Column("bank_required")]
-        public bool bankRequired { get; set; }
+        public bool BankRequired { get; set; }
     }
 }

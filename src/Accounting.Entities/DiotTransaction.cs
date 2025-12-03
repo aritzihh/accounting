@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Accounting.Entities
 {
@@ -38,21 +39,25 @@ namespace Accounting.Entities
         [ForeignKey(nameof(AccountingAccount))]
         public int AccountingAccountId { get; set; }
 
-        [Column("debit", TypeName = "decimal(18, 2)")]
+        [Column("debit")]
         public decimal? Debit { get; set; }
 
-        [Column("credit", TypeName = "decimal(18, 2)")]
+        [Column("credit")]
+        [Precision(18, 2)]
         public decimal? Credit { get; set; }
 
-        [Column("iva_base", TypeName = "decimal(18, 0)")]
+        [Column("iva_base")]
+        [Precision(18, 0)]
         [Required]
         public decimal IvaBase { get; set; }
 
-        [Column("iva_amount", TypeName = "decimal(18, 0)")]
+        [Column("iva_amount")]
+        [Precision(18, 0)]
         [Required]
         public decimal IvaAmount { get; set; }
 
-        [Column("iva_cup", TypeName = "decimal(18, 0)")]
+        [Column("iva_cup")]
+        [Precision(18, 0)]
         [Required]
         public decimal IvaCup { get; set; }
 
@@ -69,15 +74,16 @@ namespace Accounting.Entities
         public int? SupplierId { get; set; }
 
         [Column("created_at")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Column("is_active")]
         [Required]
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
 
         public virtual DiotConcept? DiotConcept { get; set; }
         public virtual Policy? Policy { get; set; }

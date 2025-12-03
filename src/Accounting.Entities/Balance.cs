@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Accounting.Entities
 {
@@ -21,26 +22,28 @@ namespace Accounting.Entities
         [ForeignKey(nameof(AccountingAccount))]
         public int AccountingAccountsId { get; set; }
 
-        [Column("opening_balance", TypeName = "decimal(18, 4)")]
+        [Column("opening_balance")]
         public decimal? OpeningBalance { get; set; }
 
-        [Column("debit", TypeName = "decimal(18, 4)")]
+        [Precision(18, 4)]
+        [Column("debit")]
         public decimal? Debit { get; set; }
 
-        [Column("credit", TypeName = "decimal(18, 4)")]
+        [Precision(18, 4)]
+        [Column("credit")]
         public decimal? Credit { get; set; }
 
-        [Column("final_balance", TypeName = "decimal(18, 4)")]
+        [Precision(18, 4)]
+        [Column("final_balance")]
         public decimal? FinalBalance { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Required]
         [Column("accounting_period_id")]

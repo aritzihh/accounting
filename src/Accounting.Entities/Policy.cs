@@ -35,13 +35,13 @@ namespace Accounting.Entities
         public string Concept { get; set; } = string.Empty;
 
         [Required]
-        [Column("date", TypeName = "date")]
+        [Column("date")]
         public DateTime Date { get; set; }
 
-        [Column("application_date", TypeName = "datetime2(3)")]
+        [Column("application_date")]
         public DateTime? ApplicationDate { get; set; }
 
-        [Column("desaplication_date", TypeName = "datetime2(3)")]
+        [Column("desaplication_date")]
         public DateTime? DesaplicationDate { get; set; }
 
         [Column("supplier_id")]
@@ -61,19 +61,17 @@ namespace Accounting.Entities
         public int NumberPolicy { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Required]
         [Column("is_active")]
         public bool IsActive { get; set; }
 
-        // Navigation properties
         public virtual FiscalYear? FiscalYear { get; set; }
         public virtual TypesPolicy? TypesPolicy { get; set; }
         public virtual DailyCode? DailyCode { get; set; }

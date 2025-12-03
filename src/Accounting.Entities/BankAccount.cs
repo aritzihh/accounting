@@ -10,40 +10,42 @@ namespace Accounting.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("bank_account_id")]
-        public int bankAccountId { get; set; }
+        public int BankAccountId { get; set; }
 
         [Column("accounting_accounts_id")]
-        public int accountingAccountsId { get; set; }
+        public int AccountingAccountsId { get; set; }
 
         [Column("bank_id")]
-        public int bankId { get; set; }
+        public int BankId { get; set; }
 
         [MaxLength(30)]
         [Column("account_number")]
-        public string accountNumber { get; set; }
+        public string AccountNumber { get; set; } = string.Empty;
 
         [MaxLength(20)]
         [Column("clabe")]
-        public int clabe {  get; set; }
+        public int Clabe {  get; set; }
 
         [Column("sat_currency_id")]
-        public int satCurrencyId { get; set; }
+        public int SatCurrencyId { get; set; }
 
         [MaxLength(100)]
         [Column("branch_name")]
-        public string branchName { get; set; }
+        public string BranchName { get; set; } = string.Empty;
 
         [Precision(18, 2)]
         [Column("initial_balance")]
-        public decimal initialBalance { get; set; }
+        public decimal InitialBalance { get; set; }
 
         [Column("is_active")]
-        public bool isActive { get; set; }
+        [Required]
+        public bool IsActive { get; set; }
 
         [Column("created_at")]
-        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime updatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
     }
 }

@@ -14,30 +14,32 @@ namespace Accounting.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("diot_concept_id")]
-        public int diotConceptId { get; set; }
+        public int DiotConceptId { get; set; }
 
         [MaxLength(5)]
         [Column("diot_key_concept")]
-        public string diotKeyConcept { get; set; }
+        public string DiotKeyConcept { get; set; } = string.Empty;
 
         [MaxLength(500)]
         [Column("diot_description")]
-        public string diotDescription {  get; set; }
+        public string DiotDescription {  get; set; } = string.Empty;
 
         [Column("debtor")]
-        public bool debtor {  get; set; }
+        public bool Debtor {  get; set; }
 
         [Precision(6, 2)]
         [Column("value_concept")]
-        public decimal valueConcept { get; set; }
+        public decimal ValueConcept { get; set; }
 
         [Column("created_at")]
-        public DateTime createdAt { get; set; } = DateTime.UtcNow;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
 
         [Column("updated_at")]
-        public DateTime updatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Column("is_active")]
-        public bool isActive { get; set; }
+        [Required]
+        public bool IsActive { get; set; }
     }
 }

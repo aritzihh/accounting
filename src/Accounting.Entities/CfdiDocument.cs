@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Accounting.Entities
 {
@@ -35,26 +36,27 @@ namespace Accounting.Entities
         public int? SatCurrencyId { get; set; }
 
         [Column("payment_method_id")]
-        [ForeignKey(nameof(PaymentMethod))]
-        public int? PaymentMethodId { get; set; }
+        [ForeignKey(nameof(SatPaymentMethod))]
+        public int? SatPaymentMethodId { get; set; }
 
         [Column("payment_way_id")]
-        [ForeignKey(nameof(PaymentWay))]
-        public int? PaymentWayId { get; set; }
+        [ForeignKey(nameof(SatPaymentWay))]
+        public int? SatPaymentWayId { get; set; }
 
         [Column("cfdi_status_id")]
-        [ForeignKey(nameof(CfdiStatus))]
-        public int? CfdiStatusId { get; set; }
+        [ForeignKey(nameof(SatCfdiStatus))]
+        public int? SatCfdiStatusId { get; set; }
 
         [Required]
-        [Column("issue_date", TypeName = "datetime2(3)")]
+        [Column("issue_date")]
         public DateTime IssueDate { get; set; }
 
-        [Column("certification_date", TypeName = "datetime2(3)")]
+        [Column("certification_date")]
         public DateTime? CertificationDate { get; set; }
 
         [Required]
-        [Column("exchange_rate", TypeName = "decimal(18, 6)")]
+        [Column("exchange_rate")]
+        [Precision(18, 6)]
         public decimal ExchangeRate { get; set; }
 
         [Required]
@@ -78,20 +80,25 @@ namespace Accounting.Entities
         public string ReceiverName { get; set; } = string.Empty;
 
         [Required]
-        [Column("subtotal", TypeName = "decimal(18, 2)")]
+        [Column("subtotal")]
+        [Precision(18, 2)]
         public decimal Subtotal { get; set; }
 
-        [Column("discount", TypeName = "decimal(18, 2)")]
+        [Column("discount")]
+        [Precision(18, 2)]
         public decimal? Discount { get; set; }
 
-        [Column("tax_transferred", TypeName = "decimal(18, 2)")]
+        [Column("tax_transferred")]
+        [Precision(18, 2)]
         public decimal? TaxTransferred { get; set; }
 
-        [Column("tax_withheld", TypeName = "decimal(18, 2)")]
+        [Column("tax_withheld")]
+        [Precision(18, 2)]
         public decimal? TaxWithheld { get; set; }
 
         [Required]
-        [Column("total", TypeName = "decimal(18, 2)")]
+        [Column("total")]
+        [Precision(18, 2)]
         public decimal Total { get; set; }
 
         [Column("related_uuid")]
@@ -109,7 +116,7 @@ namespace Accounting.Entities
         [MaxLength(500)]
         public string? PdfPath { get; set; }
 
-        [Column("link_date", TypeName = "datetime2(3)")]
+        [Column("link_date")]
         public DateTime? LinkDate { get; set; }
 
         [Required]
@@ -117,13 +124,12 @@ namespace Accounting.Entities
         public bool IsActive { get; set; }
 
         [Required]
-        [Column("created_at", TypeName = "datetime2(3)")]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at", TypeName = "datetime2(3)")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedAt { get; set; }
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
         [Required]
         [Column("policy_id")]
@@ -133,9 +139,9 @@ namespace Accounting.Entities
         // Navigation properties
         public virtual SatDocumentType? DocumentType { get; set; }
         public virtual SatCurrency? SatCurrency { get; set; }
-        public virtual PaymentMethod? PaymentMethod { get; set; }
-        public virtual PaymentWay? PaymentWay { get; set; }
-        public virtual SatCfdiStatus? CfdiStatus { get; set; }
+        public virtual SatPaymentMethod? SatPaymentMethod { get; set; }
+        public virtual SatPaymentWay? SatPaymentWay { get; set; }
+        public virtual SatCfdiStatus? SatCfdiStatus { get; set; }
         public virtual Policy? Policy { get; set; }
 
     }
