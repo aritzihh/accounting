@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Implementations\" />
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\Accounting.Entities\Accounting.Entities.csproj" />
+    <ProjectReference Include="..\Accounting.Persistence\Accounting.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
