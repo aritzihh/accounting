@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Accounting.Entities
 {
-    public class Bank
+    public class Bank : EntityBase
     {
 
         [Key]

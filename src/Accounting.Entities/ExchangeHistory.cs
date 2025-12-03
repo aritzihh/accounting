@@ -36,11 +36,11 @@ namespace Accounting.Entities
         public bool IsActive { get; set; }
 
         [Required]
-        [Column("created_at"]
+        [Column("created_at")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
-        [Column("updated_at"]        
+        [Column("updated_at")]        
         public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
 
