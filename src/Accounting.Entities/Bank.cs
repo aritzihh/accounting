@@ -11,10 +11,10 @@ namespace Accounting.Entities
     public class Bank : EntityBase
     {
 
-        [Key]
-        [Column("bank_id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BankId { get; set; }
+        //[Key]
+        //[Column("bank_id")]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int BankId { get; set; }
 
         [Required]
         [Column("name")]
@@ -33,9 +33,9 @@ namespace Accounting.Entities
         [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
 
-        [Required]
-        [Column("is_active")]
-        public bool IsActive { get; set; }
+        //[Required]
+        //[Column("is_active")]
+        //public bool IsActive { get; set; }
 
     }
 }
