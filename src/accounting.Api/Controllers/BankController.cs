@@ -1,6 +1,7 @@
 ﻿using accounting.Dto.Response;
 using Accounting.Entities;
 using Accounting.Repositories.Interfaces;
+using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,25 +53,37 @@ namespace Accounting.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Bank model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var newId = await repository.AddAsync(model);
-            var created = await repository.GetByIdAsync(newId);
-
-            return CreatedAtAction(nameof(Get), new { id = newId }, created);
+            var response = await repository.AddAsync(model);
+            return Ok(response);
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] Bank model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (model.Id != id) return BadRequest("Id mismatch.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var existing = await repository.GetByIdAsync(id);
-            if (existing is null) return NotFound();
+            try
+            {
+                // Obtener el registro existente
+                var existing = await repository.GetByIdAsync(id);
+                if (existing is null)
+                    return NotFound();
 
-            await repository.UpdateAsync(existing);
-            return NoContent();
+                existing.Name = model.Name;
+                existing.BankCode = model.BankCode;
+                existing.IsActive = model.IsActive;
+                existing.UpdatedAt = DateTime.UtcNow;
+
+                await repository.UpdateAsync(existing);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error al actualizar banco id {BankId}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al actualizar.");
+            }
         }
 
         [HttpDelete("{id:int}")]
