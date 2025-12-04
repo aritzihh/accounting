@@ -67,7 +67,7 @@ namespace Accounting.Repositories.Implementations
             var item = await GetAsync(id);
             if (item is not null)
             {
-                item.IsActive = 0;
+                item.IsActive = false;
                 await UpdateAsync();
             }
         }

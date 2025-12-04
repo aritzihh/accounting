@@ -25,7 +25,7 @@ namespace Accounting.Repositories.Implementations
 
         public async Task<ICollection<Bank>> GetAsync()
         {
-            var items = await base.GetAsync(b => b.IsActive == 1);
+            var items = await base.GetAsync(b => b.IsActive);
             return items;
         }
 
