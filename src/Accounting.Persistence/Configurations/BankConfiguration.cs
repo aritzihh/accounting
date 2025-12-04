@@ -16,11 +16,8 @@ namespace Accounting.Persistence.Configurations
         {
             builder.ToTable("banks", "dbo");
 
-            builder.HasKey(e => e.BankId);
-
-            builder.Property(e => e.BankId)
-                .HasColumnName("bank_id")
-                .ValueGeneratedOnAdd();
+            builder.HasKey(b => b.Id);
+            builder.Property(b => b.Id).HasColumnName("bank_id");
 
             builder.Property(e => e.Name)
                 .IsRequired()
@@ -41,9 +38,7 @@ namespace Accounting.Persistence.Configurations
                 .HasColumnName("updated_at");
 
             builder.Property(e => e.IsActive)
-                .IsRequired()
-                .HasColumnName("is_active")
-                .HasDefaultValue(true);
+                .HasColumnName("is_active");
 
             builder.HasIndex(e => e.Name)
                 .HasDatabaseName("IX_bank_name");
