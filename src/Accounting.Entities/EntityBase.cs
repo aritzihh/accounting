@@ -9,10 +9,8 @@ namespace Accounting.Entities
 {
     public class EntityBase
     {
-        [NotMapped]
         public int Id { get; set; }
-        [NotMapped]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
     }
 }
