@@ -1,6 +1,9 @@
 using Accounting.Persistence;
 using Accounting.Repositories.Implementations;
 using Accounting.Repositories.Interfaces;
+using Accounting.Services.Implementations;
+using Accounting.Services.Interfaces;
+using Accounting.Services.Profiles;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +19,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 builder.Services.AddScoped<IBankRepository, BankRepository>();
+builder.Services.AddScoped<IBankService, BankService>();
+
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile<BankProfile>();
+});
 
 
 var app = builder.Build();
