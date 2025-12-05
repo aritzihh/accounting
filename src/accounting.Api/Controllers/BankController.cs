@@ -1,7 +1,11 @@
 ﻿using accounting.Dto.Response;
+using Accounting.Dto.Request;
+using Accounting.Dto.Response;
 using Accounting.Entities;
 using Accounting.Repositories.Interfaces;
+using Accounting.Services.Interfaces;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,89 +16,48 @@ namespace Accounting.Api.Controllers
     public class BankController : ControllerBase
     {
 
-        private readonly IBankRepository repository;
-        private readonly ILogger<BankController> logger;
+        private readonly IBankService service;
 
-        public BankController(IBankRepository repository, ILogger<BankController> logger)
+        public BankController(IBankService service)
         {
-            this.repository = repository;
-            this.logger = logger;
+            this.service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var response = new BaseResponseGeneric<ICollection<Bank>>();
-
-            try
-            {
-                response.Data = await repository.GetAsync();
-                response.Success = true;
-                logger.LogInformation($"Obteniendo todos los bancos.");
-                return Ok(response);
-
-            }
-            catch (Exception ex)
-            {
-                response.ErrorMessage = "Error al obtener la información.";
-                logger.LogError(ex, $"{response.ErrorMessage} {ex.Message}");
-                return BadRequest(response);
-            }
+            var response = await service.GetAsync();
+            return Ok(response);
         }
+
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var bank = await repository.GetByIdAsync(id);
-            if (bank is null) return NotFound();
-            return Ok(bank);
+            var response = await service.GetAsync(id);
+            return response.Success ? Ok(response) : NotFound(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Bank model)
+        public async Task<IActionResult> Post([FromForm]BankRequestDto request)
         {
-            var response = await repository.AddAsync(model);
-            return Ok(response);
+            var response = await service.AddAsync(request);
+            return response.Success ? Ok(response) : BadRequest(response);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Bank model)
+        public async Task<IActionResult> Put(int id, [FromForm]BankRequestDto request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var response = await service.UpdateAsync(id, request);
+            return response.Success ? Ok(response) : BadRequest(response);
 
-            try
-            {
-                // Obtener el registro existente
-                var existing = await repository.GetByIdAsync(id);
-                if (existing is null)
-                    return NotFound();
-
-                existing.Name = model.Name;
-                existing.BankCode = model.BankCode;
-                existing.IsActive = model.IsActive;
-                existing.UpdatedAt = DateTime.UtcNow;
-
-                await repository.UpdateAsync(existing);
-
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error al actualizar banco id {BankId}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al actualizar.");
-            }
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var existing = await repository.GetByIdAsync(id);
-            if (existing is null) return NotFound();
-
-            await repository.DeleteAsync(id);
-            return NoContent();
+            var response = await service.DeleteAsync(id);
+            return Ok(response);
         }
-
     }
 }
