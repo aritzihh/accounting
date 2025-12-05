@@ -2,12 +2,8 @@
 
 namespace Accounting.Repositories.Interfaces
 {
-    public interface IBankRepository
+    public interface IBankRepository : IRepositoryBase<Bank>
     {
-        Task<ICollection<Bank>> GetAsync();
-        Task<Bank?> GetByIdAsync(int id);
-        Task<int> AddAsync(Bank entity);
-        Task UpdateAsync(Bank entity);
-        Task DeleteAsync(int id);
+        
     }
 }
